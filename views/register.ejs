@@ -1,5 +1,5 @@
-<%- include ("./partials/header") %>
-<div class="row">
+<%-// include ("./partials/header") %>
+<!-- <div class="row">
     <h1 style="text-align: center">Sign Up</h1>
     <div style="width: 30%; margin: 25px auto;">
         <form action="/register" method="post">
@@ -15,8 +15,8 @@
         </form>
         <a href="/campgrounds">Go Back</a>
     </div>
-</div>
-<%- include ("./partials/footer")%>
+</div> -->
+<%-// include ("./partials/footer")%>
 
 
 
@@ -29,3 +29,17 @@
 	<button>Sign Up</button>
 </form> -->
 <%-// include ("./partials/footer")%>
+
+<%- include ("./partials/header") %>
+ <form action="/register" method="POST" class="form-signin">
+  <h1 class="h3 mb-3 font-weight-normal">Please Sign Up</h1>
+  <label for="inputUsername" class="sr-only">Username</label>
+  <input type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+  <label for="inputPassword" class="sr-only">Password</label>
+  <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+</form>
+  <div class="form-signin">
+	   <a href="/campgrounds">Go Back</a>
+  </div>
+<%- include ("./partials/footer")%>

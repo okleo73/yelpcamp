@@ -34,7 +34,7 @@ app.use(flash());
 app.use(require("express-session")({ //EXPRESS-SESSION CONFIGURATION
 	secret: "Rusty",
 	resave: false,
-	saveUnitialized: false
+	saveUninitialized: false
 }));
 app.use(passport.initialize());
 app.use(passport.session());
