@@ -30,6 +30,8 @@ app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 app.use(methodOverride("_method"));
 app.use(flash());
+// MOMENTJS CONFIGURATION
+app.locals.moment = require('moment');
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({ //EXPRESS-SESSION CONFIGURATION
 	secret: "Rusty",
