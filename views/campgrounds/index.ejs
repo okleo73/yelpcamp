@@ -28,6 +28,10 @@
 
 <%- include ("../partials/header") %>
 
+	<% if(currentUser && currentUser.isAdmin){ %>
+		<h1>Welcome Admin</h1>
+	<%}%>
+
 <main role="main">
   <section class="jumbotron text-center">
     <div class="container">
@@ -35,7 +39,11 @@
       <p class="lead text-muted">View our hand-picked campgrounds from all over ther world</p>
       <p>
         <a href="/campgrounds/new" class="btn btn-primary my-2">Add New Campground</a>
-        <a href="/login" class="btn btn-secondary my-2">Sign In!</a>
+		<% if(!currentUser){ %>
+        	<a href="/login" class="btn btn-secondary my-2">Sign In!</a>
+		<%} else { %>
+		  	<a></a>
+		<%} %>
       </p>
     </div>
   </section>

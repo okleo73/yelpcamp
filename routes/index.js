@@ -18,13 +18,12 @@ router.get("/register", function(req, res){
 router.get("/login", function(req, res){
    res.render("login", {page: 'login'}); 
 });
-//show register form
-// router.get("/register", function(req, res){
-// 	res.render("register");
-// });
 //handles sign-up logic
 router.post("/register", function(req, res){
 	var newUser = new User({username: req.body.username});
+	if(req.body.adminCode === 'secretcode'){
+		newUser.isAdmin = true
+	}
 	User.register(newUser, req.body.password, function(err, user){
 		if(err){
 			// console.log(err);
@@ -37,10 +36,6 @@ router.post("/register", function(req, res){
 		})
 	})
 });
-//show login form
-// router.get("/login", function(req, res){
-// 	res.render("login");
-// });
 //handles login logic
 router.post("/login", passport.authenticate("local",
 	{
@@ -52,7 +47,6 @@ router.get("/logout", function (req, res){
 	req.flash("success", "Successfully logged out!");
 	res.redirect("/campgrounds");
 });
-
 
 
 function isLoggedIn(req, res, next){

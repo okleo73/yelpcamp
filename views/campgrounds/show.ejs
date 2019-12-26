@@ -5,8 +5,9 @@
 		<div class="list-group">
 			<li class="list-group-item active">Contact Person: John Doe</li>
 			<li class="list-group-item">Contact Number: 555-555-5555</li>
-			<li class="list-group-item">Location:</li>
+			<li class="list-group-item">Location:1350 6th Ave, San Francisco, CA 94104, USA</li>
 		</div>
+		<div id="map"></div>
 	</div>
 	<div class="col-md-9">
 		<!-- <div class="thumbnail"> -->
@@ -21,7 +22,7 @@
 				<p>
 					<em>Submitted by: <%= campground.author.username %>, <%= moment(campground.createdAt).fromNow() %></em>
 				</p>
-				<% if(currentUser && campground.author.id.equals(currentUser._id)){ %>
+				<% if(currentUser && campground.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
 					<%//checks if there is a user and their id%>
 					 <a class="btn btn-warning" href="/campgrounds/<%=campground._id%>/edit">Edit</a>
 					<form class="delete-form" action="/campgrounds/<%=campground._id%>?_method=DELETE" method="POST" style="display: inline">
@@ -82,7 +83,7 @@
 							<span class="pull-right"><%= moment(comment.createdAt).fromNow() %></span>
 							<p><%=comment.text%></p>
 							<!--Shows the edit button and sends to edit page-->
-							<% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+							<% if(currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
 								<a class="btn btn-warning" href="/campgrounds/<%=campground._id%>/comments/<%=comment._id%>/edit">
 									Edit
 								</a>
@@ -97,6 +98,36 @@
 		</div>
 	</div>
 </div>
+
+<!-- google maps -->
+<script>
+  function initMap() {
+    var lat = <%= campground.lat %>;
+    var lng = <%= campground.lng %>;
+    var center = {lat: lat, lng: lng };
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 8,
+        center: center,
+        scrollwheel: false
+    });
+    var contentString = `
+      <strong><%= campground.name %><br />
+      <%= campground.location %></strong>
+      <p><%= campground.description %></p>
+    `
+    var infowindow = new google.maps.InfoWindow({
+      content: contentString
+    });
+    var marker = new google.maps.Marker({
+        position: center,
+        map: map
+    });
+    marker.addListener('click', function() {
+      infowindow.open(map, marker);
+    });
+  }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBzRl4pb0JdSgnwalGRL9lpORzOPCkF4h4&callback=initMap"></script>
 
 <%- include ("../partials/footer") %>
 
